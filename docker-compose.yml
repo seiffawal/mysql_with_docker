@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: data_sec
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: username
+      MYSQL_PASSWORD: data_sec_usr
+      MYSQL_TLS_CERT_DIR: /etc/mysql/ssl
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./ssl:/etc/mysql/ssl
+
+volumes:
+  mysql_data:
